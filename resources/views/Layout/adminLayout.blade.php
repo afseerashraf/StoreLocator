@@ -186,9 +186,9 @@
        
     <!-- Sidebar -->
     <div class="sidebar">
-        <a href=""><i class="fas fa-user"></i> Profile </a>
+        <a href="{{ route('admin.profile') }}"><i class="fas fa-user"></i> Profile </a>
         <a href="{{ route('store.create') }}"><i class="fas fa-plus-circle"></i> Create Store</a>
-        <a href=""><i class="fas fa-box"></i> Stores</a>
+        <a href="{{ route('store.index') }}"><i class="fas fa-box"></i> Stores</a>
     </div>
 
     <!-- Main Content -->

@@ -45,6 +45,7 @@ class StoreController extends Controller
             'longitude' => $request->longitude,
 
         ]);
+        flash()->success('successfully create store '. $store->name);
 
         return redirect()->route('store.index');
     }
@@ -82,6 +83,8 @@ class StoreController extends Controller
             'longitude' => $request->longitude,
         ]);
 
+        flash()->info('successfully update store '. $store->name);
+
         return redirect()->route('store.index');
     }
 
@@ -94,6 +97,8 @@ class StoreController extends Controller
 
         $store->delete();
     
+        flash()->warning ('successfully remove store '. $store->name);
+
         return redirect()->route('store.index')->with('delete', 'Store deleted successfully.');
         
     }

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\user\UserRegister;
 use App\Http\Requests\user\UserLogin;
+use Stevebauman\Location\Facades\Location;
+use App\Models\Store;
 
 class UserController extends Controller
 {
@@ -16,7 +18,9 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = $request->password;
         $user->save();
-        
+
+        flash()->success('successfully Registet the user '. $user->name);
+
         return redirect()->route('user.viewLogin');
 
     }
@@ -25,16 +29,43 @@ class UserController extends Controller
     public function login(UserLogin $request){
        
         $credentials = ['email' => $request->email, 'password' => $request->password];
-        
-        if(auth()->guard('web')->attempt($credentials)){
-           
-            $user = auth()->guard('web')->user();
-            Session(['user' => $user]);
-           return view('user.home', compact('user'));
 
-        }else{
-            
-            return redirect()->route('user.viewLogin');
+        if (auth()->guard('web')->attempt($credentials)) {
+            $user = auth()->guard('web')->user();
+
+            // Get user location based on IP
+            $ip = request()->ip();
+            $location = Location::get($ip);
+
+            if ($location && $location->latitude && $location->longitude) {
+                // Store user's latitude & longitude in session
+                session([
+                    'latitude' => $location->latitude,
+                    'longitude' => $location->longitude
+                ]);
+            } else {
+                session([
+                    'latitude' => 10.015674, // Example: Default city latitude
+                    'longitude' => 76.341019 // Example: Default city longitude
+                ]);
+            }
+
+            // Find nearest stores
+            $latitude = session('latitude');
+            $longitude = session('longitude');
+
+            $stores = Store::selectRaw("*, 
+                (6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) 
+                * cos( radians( longitude ) - radians(?) ) 
+                + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance", 
+                [$latitude, $longitude, $latitude])
+                ->orderBy('distance')
+                ->get();
+
+            return view('user.home', compact('user', 'stores'));
+        } else {
+            return redirect()->route('user.viewLogin')->with('error', 'Invalid credentials');
         }
+
     }
 }

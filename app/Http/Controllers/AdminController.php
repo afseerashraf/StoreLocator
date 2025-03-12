@@ -30,6 +30,7 @@ class AdminController extends Controller
         }
 
         $admin->create($input);
+        flash()->success('successfully Registet the admin '. $admin->name);
 
         return redirect()->route('admin.viewLogin');
 
@@ -44,7 +45,7 @@ class AdminController extends Controller
             $admin = auth()->guard('admin')->user();
 
             Session(['admin' => $admin]);
-            
+
            return view('admin.profile', compact('admin'));
                 
         }else{
@@ -53,8 +54,17 @@ class AdminController extends Controller
         }
     }
 
+    public function profile()
+    {
+        $admin = auth()->guard('admin')->user();
+
+        return view('admin.profile', compact('admin'));
+    }
+
     public function logout(String $id){
         $admin = Admin::find(Crypt::decrypt($id));
-        $admin->logut();
+        auth()->guard('admin')->logout();
+
+        return redirect()->route('admin.viewLogin');
     }
 }

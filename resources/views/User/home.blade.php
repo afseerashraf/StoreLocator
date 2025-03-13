@@ -45,7 +45,7 @@
 
     .table tbody tr:hover {
         transform: scale(1.05);
-        background: #f4f4f4;
+        background:rgb(238, 236, 236);
     }
 
     .location-icon {

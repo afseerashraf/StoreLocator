@@ -38,7 +38,7 @@ class UserController extends Controller
             $ip = request()->ip();
 
             $location = Location::get($ip);
-
+           
             if ($location && $location->latitude && $location->longitude) {
                 session([
                     'latitude' => $location->latitude,
@@ -46,9 +46,10 @@ class UserController extends Controller
                 ]);
             }
 
-            $latitude = session('latitude');
-            $longitude = session('longitude');
-
+         
+            $latitude = session('latitude', 10.015674); 
+            $longitude = session('longitude', 76.341019); 
+    
             $stores = Store::selectRaw("*, 
                 (6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) 
                 * cos( radians( longitude ) - radians(?) ) 

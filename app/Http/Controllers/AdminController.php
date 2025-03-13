@@ -15,11 +15,13 @@ class AdminController extends Controller
     public function register(AdminRegister $request)
     {
         $admin = new Admin();
+
         $input = [
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
         ];
+
         if($request->hasfile('image')){
             
             $fileName = time().'.'.$request->image->getClientOriginalExtension();
@@ -30,6 +32,7 @@ class AdminController extends Controller
         }
 
         $admin->create($input);
+        
         flash()->success('successfully Registet the admin '. $admin->name);
 
         return redirect()->route('admin.viewLogin');

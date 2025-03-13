@@ -1,11 +1,9 @@
 @extends('Layout.adminLayout')
-@section('title', 'Create Store')
+@section('title', 'list stores')
 
 @section('content')
 
-@if(Session()->has('delete'))
-<p>{{ Session::get('delete') }}</p>
-@endif
+
 <table class="table table-striped">
     <thead class="table-light">
         <tr>

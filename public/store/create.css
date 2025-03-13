@@ -1,0 +1,18 @@
+body {
+    background-color: #f8f9fa;
+}
+.card {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.btn-location {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+}
+.btn-location:hover {
+    background-color: #5a6268;
+}

@@ -1,7 +1,7 @@
 
 @extends('layout.layout')
 
-@section('title', 'User Register')
+@section('title', 'user register')
 
 @section('content')
 
@@ -10,7 +10,7 @@
         <h3 class="text-center mb-3">User Registration</h3>
 
         <div class="text-center mb-3">
-            <a href="" class="text-decoration-none">Already have an account? Login here</a>
+            <a href="{{ route('user.viewLogin') }}" class="text-decoration-none">Already have an account? Login here</a>
         </div>
 
         <form action="{{ route('user.register') }}" method="POST" enctype="multipart/form-data">

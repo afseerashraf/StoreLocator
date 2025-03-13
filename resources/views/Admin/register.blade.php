@@ -9,7 +9,7 @@
         <h3 class="text-center mb-3">Admin Registration</h3>
 
         <div class="text-center mb-3">
-            <a href="" class="text-decoration-none">Already have an account? Login here</a>
+            <a href="{{ route('admin.viewLogin') }}" class="text-decoration-none">Already have an account? Login here</a>
         </div>
 
         <form action="{{ route('admin.register') }}" method="POST" enctype="multipart/form-data">

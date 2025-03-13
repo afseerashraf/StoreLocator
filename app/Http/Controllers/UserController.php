@@ -8,6 +8,7 @@ use App\Http\Requests\user\UserRegister;
 use App\Http\Requests\user\UserLogin;
 use Stevebauman\Location\Facades\Location;
 use App\Models\Store;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -31,6 +32,7 @@ class UserController extends Controller
         $credentials = ['email' => $request->email, 'password' => $request->password];
 
         if (auth()->guard('web')->attempt($credentials)) {
+            
             $user = auth()->guard('web')->user();
 
             // Get user location based on IP
@@ -42,11 +44,6 @@ class UserController extends Controller
                 session([
                     'latitude' => $location->latitude,
                     'longitude' => $location->longitude
-                ]);
-            } else {
-                session([
-                    'latitude' => 10.015674, // Example: Default city latitude
-                    'longitude' => 76.341019 // Example: Default city longitude
                 ]);
             }
 
@@ -67,5 +64,12 @@ class UserController extends Controller
             return redirect()->route('user.viewLogin')->with('error', 'Invalid credentials');
         }
 
+    }
+
+    public function logout(Request $request)
+    {
+        auth::logout();
+
+        return redirect()->route('user.viewLogin');
     }
 }

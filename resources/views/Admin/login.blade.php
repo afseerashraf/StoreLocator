@@ -1,13 +1,13 @@
 
 @extends('layout.layout')
 
-@section('title', 'User Login')
+@section('title', 'Admin Login')
 
 @section('content')
 
 <div class="container d-flex justify-content-center align-items-center vh-100">
     <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%;">
-        <h3 class="text-center mb-3">User Login</h3>
+        <h3 class="text-center mb-3">Admin Login</h3>
 
     
         <form action="{{ route('admin.login') }}" method="POST">

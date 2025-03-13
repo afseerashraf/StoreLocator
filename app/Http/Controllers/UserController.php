@@ -35,19 +35,17 @@ class UserController extends Controller
             
             $user = auth()->guard('web')->user();
 
-            // Get user location based on IP
             $ip = request()->ip();
+
             $location = Location::get($ip);
 
             if ($location && $location->latitude && $location->longitude) {
-                // Store user's latitude & longitude in session
                 session([
                     'latitude' => $location->latitude,
                     'longitude' => $location->longitude
                 ]);
             }
 
-            // Find nearest stores
             $latitude = session('latitude');
             $longitude = session('longitude');
 
@@ -60,7 +58,9 @@ class UserController extends Controller
                 ->get();
 
             return view('user.home', compact('user', 'stores'));
+       
         } else {
+            
             return redirect()->route('user.viewLogin')->with('error', 'Invalid credentials');
         }
 

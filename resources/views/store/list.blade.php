@@ -18,12 +18,15 @@
     <tbody>
         @foreach($stores as $store)
         <tr>
+            <td>{{ $loop->iteration }}</td>
             <td>{{ $store->name }}</td>
             <td>{{ $store->address }}</td>
             <td>{{ $store->latitude }}</td>
             <td>{{ $store->longitude }}</td>
 
             <td>
+
+            <a href="{{ route('store.show', encrypt($store->id)) }}" class="btn btn-outline-success"> 👀 View Store</a>
                 <form action="{{ route('store.destroy', encrypt($store->id)) }}" method="POST" style="display: inline;">
                     @csrf
                     @method('DELETE')
@@ -36,5 +39,7 @@
         @endforeach
     </tbody>
 </table>
+{{ $stores->links() }}
+
 
 @endsection

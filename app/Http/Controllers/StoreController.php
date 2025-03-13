@@ -17,7 +17,7 @@ class StoreController extends Controller
      */
     public function index()
     {
-        $stores = Store::all();
+        $stores = Store::paginate(7);
 
         return view('store.list', compact('stores'));
     }
@@ -55,7 +55,9 @@ class StoreController extends Controller
      */
     public function show(string $id)
     {
-       
+       $store = Store::find(Crypt::decrypt($id));
+
+       return view('store.show', compact('store'));
     }
     /**
      * Show the form for editing the specified resource.

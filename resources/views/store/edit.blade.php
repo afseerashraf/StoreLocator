@@ -1,7 +1,7 @@
 @extends('Layout.adminLayout')
 @section('title', 'edit store')
 
-<link rel="stylesheet" href="{{ asset('store/edit.css') }}">
+<link rel="stylesheet" href="{{ asset('storeStyle/edit.css') }}">
 
 @section('content')
    

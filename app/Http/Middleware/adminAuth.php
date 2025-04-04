@@ -15,12 +15,12 @@ class adminAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(auth()->guard('admin')->check()) {
+        if (auth()->guard('admin')->check()) {
             return $next($request);
         }
 
-        if($request->route() && $request->route()->getName() !== 'admin.viewLogin') {
-           
+        if ($request->route() && $request->route()->getName() !== 'admin.viewLogin') {
+
             return redirect()->route('admin.viewLogin');
         }
 

@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Store;
 use App\Http\Requests\store\createStore;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Log;
 use App\Http\Requests\store\storeUpdate;
-
+use App\Models\Store;
+use Illuminate\Support\Facades\Crypt;
 
 class StoreController extends Controller
 {
@@ -35,7 +32,7 @@ class StoreController extends Controller
      */
     public function store(createStore $request)
     {
-        $store = new Store();
+        $store = new Store;
 
         $store->create([
 
@@ -45,7 +42,7 @@ class StoreController extends Controller
             'longitude' => $request->longitude,
 
         ]);
-        flash()->success('successfully create store '. $store->name);
+        flash()->success('successfully create store '.$store->name);
 
         return redirect()->route('store.index');
     }
@@ -55,27 +52,27 @@ class StoreController extends Controller
      */
     public function show(string $id)
     {
-       $store = Store::find(Crypt::decrypt($id));
+        $store = Store::find(Crypt::decrypt($id));
 
-       return view('store.show', compact('store'));
+        return view('store.show', compact('store'));
     }
+
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-       $store = Store::find(Crypt::decrypt($id));
+        $store = Store::find(Crypt::decrypt($id));
 
-       return view('store.edit', compact('store'));
+        return view('store.edit', compact('store'));
     }
-    
 
     /**
      * Update the specified resource in storage.
      */
     public function update(storeUpdate $request, string $id)
     {
-        
+
         $store = Store::findOrFail(Crypt::decrypt($id));
 
         $store->update([
@@ -85,7 +82,7 @@ class StoreController extends Controller
             'longitude' => $request->longitude,
         ]);
 
-        flash()->info('successfully update store '. $store->name);
+        flash()->info('successfully update store '.$store->name);
 
         return redirect()->route('store.index');
     }
@@ -98,10 +95,10 @@ class StoreController extends Controller
         $store = Store::findOrFail(Crypt::decrypt($id));
 
         $store->delete();
-    
-        flash()->warning ('successfully remove store '. $store->name);
+
+        flash()->warning('successfully remove store '.$store->name);
 
         return redirect()->route('store.index')->with('delete', 'Store deleted successfully.');
-        
+
     }
 }
